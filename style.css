@@ -1,0 +1,153 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #00BFA5;
+    --dark-color: #2B2B2B;
+    --light-gray-color: #f4f4f4;
+    --white-color: #ffffff;
+    --default-font: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--default-font);
+    margin: 0;
+    padding: 0;
+    color: var(--dark-color);
+    line-height: 1.6;
+    background-color: var(--light-gray-color);
+}
+
+/* --- Header & Navigation --- */
+header {
+    background: var(--white-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 50px;
+}
+
+/* --- Main Dashboard --- */
+main {
+    padding: 40px 20px;
+}
+
+.dashboard-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.feature-box {
+    background-color: var(--white-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.feature-box h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    text-align: center;
+    color: var(--dark-color);
+}
+
+/* --- Countdown Clock Styles --- */
+.countdown-box {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+}
+
+.countdown-box h2 {
+    color: var(--white-color);
+}
+
+#countdown-clock {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.time-block {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    min-width: 80px;
+}
+
+.time-block span {
+    font-size: 2.5rem;
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+}
+
+/* --- Essay Analysis Styles --- */
+#essay-input {
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't add to width */
+    padding: 15px;
+    font-family: var(--default-font);
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.cta-button-main {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button-main:hover {
+    background-color: #00a28d;
+}
+
+#analysis-results {
+    margin-top: 30px;
+    text-align: left;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: #e9e9e9;
+    color: #555;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+    #countdown-clock {
+        flex-direction: column;
+    }
+}

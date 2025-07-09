@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Painel de Estudos ENEM - Zam Prep</title>
+    <link rel="stylesheet" href="/style.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+
+    <script async defer
+        src="https://moral-boa-38.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+        data-clerk-publishable-key="pk_test_bW9yYWwtYm9hLTM4LmNsZXJrLmFjY291bnRzLmRldiQ"
+        onload="startClerk()"
+    ></script>
+
+</head>
+<body>
+
+    <div class="content-wrapper" style="display: none;">
+        <header>
+            <nav>
+                <a href="/"><img src="/logo.png" alt="Zam Prep Logo" class="logo"></a>
+                <div id="user-button"></div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="dashboard-container">
+                <section class="feature-box countdown-box">
+                    <h2>Sua jornada para o sucesso no ENEM começa agora!</h2>
+                    <div id="countdown-clock">
+                        <div class="time-block">
+                            <span id="days">0</span>
+                            Dias
+                        </div>
+                        <div class="time-block">
+                            <span id="hours">0</span>
+                            Horas
+                        </div>
+                        <div class="time-block">
+                            <span id="minutes">0</span>
+                            Minutos
+                        </div>
+                        <div class="time-block">
+                            <span id="seconds">0</span>
+                            Segundos
+                        </div>
+                    </div>
+                </section>
+
+                <section class="feature-box">
+                    <h2>Receba um Feedback Poderoso para sua Redação</h2>
+                    <p>Nossa IA analisa sua redação com base nas 5 competências oficiais do ENEM e te mostra exatamente onde melhorar para alcançar a nota 1000.</p>
+                    <textarea id="essay-input" rows="15" placeholder="Cole sua redação aqui..."></textarea>
+                    <button id="analyze-button" class="cta-button-main">Analisar Minha Redação</button>
+                    
+                    <div id="analysis-results" style="display: none;">
+                        <h3>Resultados da Análise</h3>
+                        <div id="results-content"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Zam Prep. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        function startClerk() {
+            const contentWrapper = document.querySelector('.content-wrapper');
+            const userButton = document.getElementById('user-button');
+            const Clerk = window.Clerk;
+
+            Clerk.load().then(() => {
+                if (Clerk.user) {
+                    contentWrapper.style.display = 'block';
+                    Clerk.mountUserButton(userButton);
+                } else {
+                    // We will create this sign-in page later
+                    window.location.href = "/sign-in.html"; 
+                }
+            });
+        }
+    </script>
+    
+    <script src="/script.js"></script>
+
+</body>
+</html>
