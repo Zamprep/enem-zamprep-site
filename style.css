@@ -326,3 +326,45 @@ footer {
 .faq-item.active .faq-icon {
     transform: rotate(45deg);
 }
+/* --- Practice Question Styles --- */
+.question-card {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+.question-text {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+.options-container .option {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.options-container label {
+    margin-left: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.check-answer-btn {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border: none;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.check-answer-btn:hover {
+    background-color: var(--secondary-color-dark);
+}
+.explanation {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 4px;
+}

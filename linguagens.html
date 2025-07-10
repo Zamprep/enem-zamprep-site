@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linguagens e Códigos - Zam Prep</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+
+    <script async defer
+        src="https://moral-boa-38.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+        data-clerk-publishable-key="pk_test_bW9yYWwtYm9hLTM4LmNsZXJrLmFjY291bnRzLmRldiQ"
+        onload="startClerk()"
+    ></script>
+</head>
+<body>
+    <div class="content-wrapper" style="display: none;">
+        <header>
+            <nav>
+                <a href="index.html"><img src="logo.png" alt="Zam Prep Logo" class="logo"></a>
+                <div id="user-button"></div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="dashboard-container">
+                <section class="feature-box">
+                    <h2>Prática: Linguagens, Códigos e suas Tecnologias</h2>
+                    <p>Teste seus conhecimentos com questões de múltipla escolha geradas por IA, no mesmo estilo do ENEM. Clique no botão para gerar um novo conjunto de questões.</p>
+                    <button id="generate-questions-button" class="cta-button-main">Gerar 5 Novas Questões</button>
+                    
+                    <div id="questions-container" style="margin-top: 30px; text-align: left;"></div>
+                </section>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Zam Prep. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        function startClerk() {
+            const Clerk = window.Clerk;
+            Clerk.load().then(() => {
+                const contentWrapper = document.querySelector('.content-wrapper');
+                const userButton = document.getElementById('user-button');
+                if (Clerk.user) {
+                    contentWrapper.style.display = 'block';
+                    Clerk.mountUserButton(userButton);
+                } else {
+                    window.location.href = "https://zamprep.com/pt-br/sign-in.html"; 
+                }
+            });
+        }
+    </script>
+    <script src="linguagens-logic.js"></script>
+</body>
+</html>
