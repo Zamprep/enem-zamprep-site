@@ -151,3 +151,50 @@ footer {
         flex-direction: column;
     }
 }
+/* Location: enem-zamprep-site/style.css (add to the bottom) */
+
+/* --- New Countdown Clock V2 Styles --- */
+#countdown-clock-V2 {
+    padding: 20px 0;
+}
+
+.days-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+#countdown-clock-V2 #days {
+    font-size: 5rem; /* Large font for the number */
+    font-weight: 700;
+}
+
+#countdown-clock-V2 .days-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.exam-dates {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+/* Make it smaller on mobile devices */
+@media (max-width: 768px) {
+    #countdown-clock-V2 #days {
+        font-size: 4rem;
+    }
+    #countdown-clock-V2 .days-label {
+        font-size: 1rem;
+    }
+    .exam-dates {
+        font-size: 1rem;
+    }
+}
