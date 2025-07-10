@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vamos Começar! - Zam Prep</title>
+    <link rel="stylesheet" href="/style.css">
+    
+    <script async defer
+        src="https://moral-boa-38.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+        data-clerk-publishable-key="pk_test_bW9yYWwtYm9hLTM4LmNsZXJrLmFjY291bnRzLmRldiQ"
+        onload="startClerk()"
+    ></script>
+
+</head>
+<body>
+
+    <div class="content-wrapper" style="display: none;">
+        <header>
+            <nav>
+                <a href="/"><img src="/logo.png" alt="Zam Prep Logo" class="logo"></a>
+                <div id="user-button"></div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="dashboard-container">
+                <section class="feature-box">
+                    <h2>Bem-vindo(a) ao Zam Prep!</h2>
+                    <p>Responda a algumas perguntas rápidas para que possamos personalizar sua jornada de estudos.</p>
+                    
+                    <form id="onboarding-form">
+                        <div class="form-group">
+                            <label for="exam-date">Quando você pretende fazer o ENEM?</label>
+                            <select id="exam-date" name="exam_date" required>
+                                <option value="2025">Vou fazer este ano (2025)</option>
+                                <option value="2026">Vou fazer em 2026</option>
+                                <option value="nao_sei">Ainda não sei</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="biggest-challenge">Qual é o seu maior desafio na preparação para o ENEM?</label>
+                            <select id="biggest-challenge" name="biggest_challenge" required>
+                                <option value="redacao">Escrever uma boa redação</option>
+                                <option value="matematica">Matemática e suas tecnologias</option>
+                                <option value="humanas">Ciências Humanas</option>
+                                <option value="natureza">Ciências da Natureza</option>
+                                <option value="linguagens">Linguagens e Códigos</option>
+                                <option value="tempo">Gerenciamento do tempo durante a prova</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" id="submit-onboarding" class="cta-button-main">Salvar e Ir para o Painel</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function startClerk() {
+            const contentWrapper = document.querySelector('.content-wrapper');
+            const userButton = document.getElementById('user-button');
+            const Clerk = window.Clerk;
+
+            Clerk.load().then(() => {
+                if (Clerk.user) {
+                    contentWrapper.style.display = 'block';
+                    Clerk.mountUserButton(userButton);
+                } else {
+                    // This page should not be accessible if logged out
+                    window.location.href = "/sign-in.html"; 
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -58,7 +58,7 @@
         </footer>
     </div>
 
-    <script>
+  <script>
         function startClerk() {
             const contentWrapper = document.querySelector('.content-wrapper');
             const userButton = document.getElementById('user-button');
@@ -66,16 +66,17 @@
 
             Clerk.load().then(() => {
                 if (Clerk.user) {
+                    // If the user is logged in, show the page content and mount the user button
                     contentWrapper.style.display = 'block';
                     Clerk.mountUserButton(userButton);
                 } else {
-                    // We will create this sign-in page later
-                    window.location.href = "/sign-in.html"; 
+                    // THIS IS THE UPDATED LINE
+                    // If user is not logged in, redirect them to the MAIN site's sign-in page
+                    window.location.href = "https://zamprep.com/pt-br/sign-in.html"; 
                 }
             });
         }
     </script>
-    
     <script src="/script.js"></script>
 
 </body>
