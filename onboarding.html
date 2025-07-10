@@ -3,22 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vamos Começar! - Zam Prep</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Vamos Começar! Personalize Sua Jornada - Zam Prep</title>
+    <meta name="description" content="Personalize sua experiência de estudos no Zam Prep respondendo a algumas perguntas rápidas sobre seus objetivos para o ENEM.">
+    <meta name="keywords" content="onboarding, ENEM, preparação ENEM, personalizar estudos, Zam Prep, jornada de estudos">
+    <meta name="author" content="Zam Prep Team">
+    <meta property="og:title" content="Vamos Começar! - Zam Prep">
+    <meta property="og:description" content="Personalize sua experiência de estudos no Zam Prep respondendo a algumas perguntas rápidas sobre seus objetivos para o ENEM.">
+    <meta property="og:image" content="https://www.zamprep.com/social-share-onboarding.jpg"> <meta property="og:url" content="https://www.zamprep.com/pt-br/onboarding.html"> <meta property="og:type" content="website">
+    <link rel="canonical" href="https://www.zamprep.com/pt-br/onboarding.html"> <link rel="stylesheet" href="/style.css">
     
-    <script async defer
-        src="https://moral-boa-38.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
-        data-clerk-publishable-key="pk_test_bW9yYWwtYm9hLTM4LmNsZXJrLmFjY291bnRzLmRldiQ"
-        onload="startClerk()"
-    ></script>
+    <style>
+        /* Styles specific to the onboarding form, re-using dashboard-container/feature-box */
+        .dashboard-container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        .feature-box { background: var(--white-color); padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+        .feature-box h2 { color: var(--primary-color); font-size: 2.2rem; margin-bottom: 20px; }
+        .feature-box p { font-size: 1.1rem; color: var(--text-muted-color); margin-bottom: 30px; }
 
+        .form-group { margin-bottom: 25px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--dark-color); font-size: 1.1rem; }
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--default-font);
+            font-size: 1rem;
+            box-sizing: border-box; /* Ensures padding doesn't increase width */
+            background-color: var(--light-gray-color);
+            appearance: none; /* Removes default select arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="gray"><polygon points="0,0 10,0 5,10"/></svg>'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 10px;
+        }
+
+        #submit-onboarding { margin-top: 30px; width: auto; /* Allow button to size to content */ }
+        
+        /* Styles for the loading spinner */
+        .loading-spinner { text-align: center; padding: 50px; font-size: 1.2em; color: #555; }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .dashboard-container { margin: 20px auto; padding: 0 15px; }
+            .feature-box { padding: 30px; }
+            .feature-box h2 { font-size: 2rem; }
+            .feature-box p { font-size: 1rem; }
+            .form-group label { font-size: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .feature-box h2 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
 <body>
+
+    <div id="loading-spinner" class="loading-spinner">
+        Carregando formulário...
+    </div>
 
     <div class="content-wrapper" style="display: none;">
         <header>
             <nav>
-                <a href="/"><img src="/logo.png" alt="Zam Prep Logo" class="logo"></a>
+                <a href="https://zamprep.com/pt-br/"><img src="/logo.png" alt="Zam Prep Logo" class="logo"></a>
                 <div id="user-button"></div>
             </nav>
         </header>
@@ -33,7 +81,7 @@
                         <div class="form-group">
                             <label for="exam-date">Quando você pretende fazer o ENEM?</label>
                             <select id="exam-date" name="exam_date" required>
-                                <option value="2025">Vou fazer este ano (2025)</option>
+                                <option value="">Selecione uma opção</option> <option value="2025">Vou fazer este ano (2025)</option>
                                 <option value="2026">Vou fazer em 2026</option>
                                 <option value="nao_sei">Ainda não sei</option>
                             </select>
@@ -42,7 +90,7 @@
                         <div class="form-group">
                             <label for="biggest-challenge">Qual é o seu maior desafio na preparação para o ENEM?</label>
                             <select id="biggest-challenge" name="biggest_challenge" required>
-                                <option value="redacao">Escrever uma boa redação</option>
+                                <option value="">Selecione uma opção</option> <option value="redacao">Escrever uma boa redação</option>
                                 <option value="matematica">Matemática e suas tecnologias</option>
                                 <option value="humanas">Ciências Humanas</option>
                                 <option value="natureza">Ciências da Natureza</option>
@@ -56,25 +104,126 @@
                 </section>
             </div>
         </main>
+        
+        <footer>
+            <p>&copy; 2025 Zam Prep. Todos os direitos reservados.</p>
+        </footer>
     </div>
 
+    <script src="/script.js"></script>
+
     <script>
-        function startClerk() {
+        // Function to initialize Clerk for this specific onboarding page
+        async function initOnboardingClerk() {
             const contentWrapper = document.querySelector('.content-wrapper');
             const userButton = document.getElementById('user-button');
-            const Clerk = window.Clerk;
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const Clerk = window.Clerk; // Access the global Clerk object loaded by script.js
 
-            Clerk.load().then(() => {
+            // Check if Clerk is available before proceeding
+            if (!Clerk) {
+                console.error("Clerk.js não disponível. Certifique-se de que script.js o carrega.");
+                // Fallback: Redirect to main site's sign-in if Clerk is not loaded
+                window.location.href = "https://zamprep.com/pt-br/sign-in.html";
+                return;
+            }
+
+            try {
+                await Clerk.load(); // Load the user's session
+
+                loadingSpinner.style.display = 'none'; // Hide loading spinner
+
                 if (Clerk.user) {
-                    contentWrapper.style.display = 'block';
-                    Clerk.mountUserButton(userButton);
-                } else {
-                    // This page should not be accessible if logged out
-                    window.location.href = "/sign-in.html"; 
-                }
-            });
-        }
-    </script>
+                    contentWrapper.style.display = 'block'; // Show content
+                    Clerk.mountUserButton(userButton); // Mount the user button
+                    
+                    // IMPORTANT: Check if onboarding is *required* or *completed* for this user.
+                    // If a user has already onboarded, you might want to redirect them directly to the dashboard.
+                    // This typically involves checking user metadata via Clerk or your backend.
+                    // Example (pseudo-code):
+                    // if (Clerk.user.publicMetadata.onboarding_complete) {
+                    //    window.location.href = "/pt-br/account-dashboard.html"; // Or to ENEM dashboard
+                    // }
 
+                } else {
+                    // This page should ideally only be accessible to logged-in users who haven't onboarded yet.
+                    // If a logged-out user lands here, redirect to sign-in.
+                    window.location.href = "https://zamprep.com/pt-br/sign-in.html";
+                }
+            } catch (err) {
+                console.error("Erro de inicialização do onboarding do Clerk:", err);
+                window.location.href = "https://zamprep.com/pt-br/sign-in.html"; // Redirect on error
+            }
+        }
+
+        // --- Onboarding Form Submission Logic ---
+        document.getElementById('onboarding-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const submitButton = document.getElementById('submit-onboarding');
+            submitButton.textContent = 'Salvando...';
+            submitButton.disabled = true; // Disable button to prevent multiple submissions
+            submitButton.style.opacity = '0.7';
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            console.log('Dados do formulário de onboarding:', data); // Log data for debugging
+
+            // --- IMPORTANT: This is where you'd send data to your backend API ---
+            // Example using fetch API (replace with your actual API endpoint)
+            /*
+            try {
+                const response = await fetch('/api/save-onboarding', { // Your backend API endpoint
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${window.Clerk.session.getToken()}` // Send Clerk session token for auth
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Backend response:', result);
+
+                // --- Redirect after successful submission ---
+                // Example: Redirect to ENEM dashboard
+                window.location.href = "https://enem.zamprep.com/pt-br/"; 
+
+            } catch (error) {
+                console.error('Erro ao salvar dados do onboarding:', error);
+                alert('Erro ao salvar suas preferências. Por favor, tente novamente.');
+                submitButton.textContent = 'Salvar e Ir para o Painel';
+                submitButton.disabled = false;
+                submitButton.style.opacity = '1';
+            }
+            */
+
+            // --- TEMPORARY: Simulate API call and redirect for testing ---
+            setTimeout(() => {
+                alert('Preferências salvas com sucesso! Redirecionando para o painel.');
+                // After successful "save", redirect the user.
+                // Replace with your actual dashboard URL (e.g., ENEM dashboard or main account dashboard)
+                window.location.href = "https://enem.zamprep.com/pt-br/";
+            }, 1500); // Simulate network delay
+            // --- END TEMPORARY ---
+        });
+
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial hide/show states for content and spinner
+            document.querySelector('.content-wrapper').style.display = 'none';
+            document.getElementById('loading-spinner').style.display = 'block';
+            document.getElementById('user-button').style.display = 'none'; // Keep user button hidden until mounted
+
+            // Call the Clerk initialization for this page
+            initOnboardingClerk();
+        });
+    </script>
 </body>
 </html>
