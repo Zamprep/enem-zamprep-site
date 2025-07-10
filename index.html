@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Painel de Estudos ENEM - Zam Prep</title>
-    <meta name="description" content="Acesse seu painel personalizado para o ENEM na Zam Prep: contador regressivo, análise de redação com IA, questões práticas e mais.">
-    <meta name="keywords" content="ENEM, Zam Prep ENEM, preparação ENEM, IA ENEM, redação ENEM, simulados ENEM, contagem regressiva ENEM">
-    <meta name="author" content="Zam Prep Team">
-    <meta property="og:title" content="Painel ENEM - Zam Prep">
-    <meta property="og:description" content="Acesse seu painel personalizado para o ENEM na Zam Prep: contador regressivo, análise de redação com IA, questões práticas e mais.">
-    <meta property="og:image" content="https://enem.zamprep.com/social-share-enem.jpg">
-    <meta property="og:url" content="https://enem.zamprep.com">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="https://enem.zamprep.com">
+    <title>Painel de Estudos ENEM - Zam Prep</title>
     <link rel="stylesheet" href="style.css"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    <style>
+        .priority-table { list-style: none; padding: 0; }
+        .priority-item { background-color: #fff; border: 1px solid #eee; margin-bottom: 10px; padding: 15px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; }
+        .priority-item.highlight { border-left: 5px solid var(--primary-color); }
+        .priority-item .rank { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-right: 20px; }
+    </style>
 
     <script async defer
         src="https://moral-boa-38.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
         data-clerk-publishable-key="pk_test_bW9yYWwtYm9hLTM4LmNsZXJrLmFjY291bnRzLmRldiQ"
-        onload="startClerk()"
     ></script>
 </head>
 <body>
@@ -48,8 +44,7 @@
                 <section class="feature-box" id="priority-container" style="display: none;">
                     <h2>Seu Plano de Foco</h2>
                     <p>Com base nas suas respostas, esta é a sua ordem de prioridade.</p>
-                    <ul class="priority-table" id="priority-table">
-                        </ul>
+                    <ul class="priority-table" id="priority-table"></ul>
                 </section>
 
                 <section class="feature-box">
@@ -58,59 +53,8 @@
                     <textarea id="essay-input" rows="15" placeholder="Cole sua redação aqui..."></textarea>
                     <button id="analyze-button" class="cta-button-main">Analisar Minha Redação</button>
                     
-                    <div id="analysis-results" style="display: none;">
-                        </div>
+                    <div id="analysis-results" style="display: none;"></div>
                 </section>
-                </section>
-
-                <section class="feature-box">
-                    <h2>Tira-Dúvidas Rápido</h2>
-                    <p>Tem uma pergunta sobre o ENEM? Encontre respostas rápidas para as dúvidas mais comuns.</p>
-                    <div class="faq-container">
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                <span>Quem pode participar do ENEM?</span>
-                                <span class="faq-icon">+</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Que ótima pergunta! Basicamente, qualquer pessoa que já concluiu o Ensino Médio ou está prestes a concluir pode fazer o ENEM. É a sua grande porta de entrada para a universidade, seja para conseguir uma vaga pelo Sisu, uma bolsa pelo ProUni, ou financiamento pelo Fies. Mesmo quem já está na faculdade ou só quer testar os conhecimentos pode participar. Estamos aqui para te ajudar a se preparar para esse grande passo!</p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                <span>Preciso pagar para fazer a prova?</span>
-                                <span class="faq-icon">+</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Essa é uma dúvida muito importante. Sim, existe uma taxa de inscrição. Porém, o mais legal é que muitos estudantes conseguem a isenção dessa taxa! Geralmente, se você está no último ano do Ensino Médio em escola pública, ou se sua família faz parte do Cadastro Único (CadÚnico), você tem grandes chances de não precisar pagar. Fique sempre de olho no edital oficial do ENEM para não perder os prazos para pedir a isenção, ok? Queremos que nada te impeça de brilhar!</p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                <span>O que acontece se eu faltar em um dos dias de prova?</span>
-                                <span class="faq-icon">+</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>É fundamental que você saiba disso. Se você faltar no primeiro dia, você até pode fazer a prova do segundo dia, mas suas notas serão apenas para autoavaliação, e você não poderá usar o resultado para os programas do governo como Sisu e ProUni. Se você faltar no segundo dia, infelizmente suas notas não serão calculadas. O segredo é se programar bem para estar presente nos dois dias e dar o seu melhor. Cada etapa é uma vitória na sua jornada!</p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <button class="faq-question">
-                                <span>O que eu preciso levar no dia do exame?</span>
-                                <span class="faq-icon">+</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Excelente pergunta para já ir se organizando! No dia, é obrigatório levar um documento de identificação original com foto (não vale cópia!) e uma caneta esferográfica de tinta preta, fabricada em material transparente. Levar o seu Cartão de Confirmação da Inscrição não é obrigatório, mas é uma ótima ideia, pois tem todas as informações que você precisa. E claro, leve um lanchinho e água para manter a energia lá em cima. Estar bem preparado nos detalhes faz toda a diferença!</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-        </main>
             </div>
         </main>
         
@@ -120,6 +64,5 @@
     </div>
 
     <script src="enem-dashboard-logic.js"></script>
-
 </body>
 </html>

@@ -1,8 +1,46 @@
-// This function runs after the page content has loaded
-document.addEventListener('DOMContentLoaded', function() {
+// This function waits for the Clerk object to be ready
+function startClerkWhenReady() {
+    const Clerk = window.Clerk;
 
+    if (Clerk && Clerk.load) {
+        // Clerk is available, let's initialize the page
+        initializePage();
+    } else {
+        // If Clerk is not ready yet, wait a moment and try again
+        setTimeout(startClerkWhenReady, 100);
+    }
+}
+
+// This function runs all the logic for our page
+function initializePage() {
+    const Clerk = window.Clerk;
+
+    Clerk.load().then(() => {
+        const contentWrapper = document.querySelector('.content-wrapper');
+        const userButton = document.getElementById('user-button');
+        const loadingSpinner = document.getElementById('loading-spinner');
+
+        // This code protects the page
+        if (Clerk.user) {
+            loadingSpinner.style.display = 'none';
+            contentWrapper.style.display = 'block';
+            Clerk.mountUserButton(userButton);
+            
+            // Now that we know the user is logged in, run all dashboard functions
+            initializeDashboardFeatures();
+
+        } else {
+            // If user is not logged in, redirect them to the MAIN site's sign-in page
+            window.location.href = "https://zamprep.com/pt-br/sign-in.html"; 
+        }
+    });
+}
+
+// This function sets up all the interactive parts of the dashboard
+function initializeDashboardFeatures() {
+    
     // --- Countdown Clock Logic ---
-    const examDate = new Date('2025-11-02T13:30:00-03:00'); 
+    const examDate = new Date('2025-11-02T13:30:00-03:00');
     const daysEl = document.getElementById('days');
     const countdownContainer = document.getElementById('countdown-container');
 
@@ -21,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Priority Table Logic (Placeholder) ---
     const priorityContainer = document.getElementById('priority-container');
     const priorityTable = document.getElementById('priority-table');
-    const userWeakness = 'redacao'; // This will come from the database later
+    const userWeakness = 'redacao';
 
     if (priorityContainer && priorityTable) {
         const topics = [
@@ -55,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- AI Essay Analysis Logic ---
-    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev';
+    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev/';
     const analyzeButton = document.getElementById('analyze-button');
     const essayInput = document.getElementById('essay-input');
     const resultsContainer = document.getElementById('analysis-results');
@@ -101,19 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+}
 
-    // --- FAQ Accordion Logic ---
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const questionButton = item.querySelector('.faq-question');
-        questionButton.addEventListener('click', () => {
-            const wasActive = item.classList.contains('active');
-            faqItems.forEach(i => i.classList.remove('active'));
-            if (!wasActive) {
-                item.classList.add('active');
-            }
-        });
-    });
-
-});
+// Start the process when the DOM is ready
+document.addEventListener('DOMContentLoaded', startClerkWhenReady);
