@@ -10,48 +10,45 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
     <style>
         .priority-table { list-style: none; padding: 0; }
-        .priority-item { background-color: #fff; border: 1px solid #eee; margin-bottom: 10px; padding: 15px 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; }
+        .priority-item { background-color: #fff; border: 1px solid #eee; margin-bottom: 10px; padding: 15px 20px; border-radius: 8px; display: flex; align-items: center; font-size: 1.1rem; font-weight: 600; }
         .priority-item.highlight { border-left: 5px solid var(--primary-color); }
         .priority-item .rank { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-right: 20px; }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="https://zamprep.com/pt-br/"><img src="logo.png" alt="Zam Prep Logo" class="logo"></a>
-            <div id="user-button"></div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="dashboard-container">
-            <section class="feature-box" id="countdown-container">
-                 <h2 style="font-size: 1.5rem; font-weight: 500;">
-                    Faltam apenas <span style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color);" id="days">...</span> dias para o ENEM! Vamos te preparar!
-                </h2>
-            </section>
-
-            <section class="feature-box" id="priority-container">
-                <h2>Seu Plano de Foco</h2>
-                <p>Com base nas suas respostas, esta é a sua ordem de prioridade. Comece pelo topo!</p>
-                <ul class="priority-table" id="priority-table">
-                    </ul>
-            </section>
-
-            <section class="feature-box">
-                <h2>Análise de Redação com IA</h2>
-                <p>Nossa IA analisa sua redação com base nas 5 competências oficiais do ENEM e te mostra exatamente onde melhorar para alcançar a nota 1000.</p>
-                <textarea id="essay-input" rows="15" placeholder="Cole sua redação aqui..."></textarea>
-                <button id="analyze-button" class="cta-button-main">Analisar Minha Redação</button>
-                <div id="analysis-results" style="display: none;"></div>
-            </section>
-        </div>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 Zam Prep. Todos os direitos reservados.</p>
-    </footer>
-
+    <div id="loading-spinner" class="loading-spinner">Carregando seu painel...</div>
+    <div class="content-wrapper" style="display: none;">
+        <header>
+            <nav>
+                <a href="https://zamprep.com/pt-br/"><img src="logo.png" alt="Zam Prep Logo" class="logo"></a>
+                <div id="user-button"></div>
+            </nav>
+        </header>
+        <main>
+            <div class="dashboard-container">
+                <section class="feature-box" id="countdown-container">
+                     <h2 style="font-size: 1.5rem; font-weight: 500;">
+                        Faltam apenas <span style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color);" id="days">...</span> dias para o ENEM! Vamos te preparar!
+                    </h2>
+                </section>
+                <section class="feature-box" id="priority-container">
+                    <h2>Seu Plano de Foco</h2>
+                    <p>Com base nas suas respostas, esta é a sua ordem de prioridade.</p>
+                    <ul class="priority-table" id="priority-table"></ul>
+                </section>
+                <section class="feature-box">
+                    <h2>Análise de Redação com IA</h2>
+                    <p>Nossa IA analisa sua redação com base nas 5 competências oficiais do ENEM e te mostra exatamente onde melhorar para alcançar a nota 1000.</p>
+                    <textarea id="essay-input" rows="15" placeholder="Cole sua redação aqui..."></textarea>
+                    <button id="analyze-button" class="cta-button-main">Analisar Minha Redação</button>
+                    <div id="analysis-results" style="display: none;"></div>
+                </section>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Zam Prep. Todos os direitos reservados.</p>
+        </footer>
+    </div>
     <script src="enem-dashboard-logic.js"></script>
 </body>
 </html>

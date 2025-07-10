@@ -1,84 +1,48 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // --- Countdown Clock Logic ---
-    const examDate = new Date('2025-11-02T13:30:00-03:00');
-    const daysEl = document.getElementById('days');
-    const countdownContainer = document.getElementById('countdown-container');
-
-    if (daysEl && countdownContainer) {
-        const now = new Date();
-        const distance = examDate - now;
-        if (distance < 0) {
-            countdownContainer.innerHTML = "<h2>O ENEM 2025 já passou! Parabéns pela sua dedicação!</h2>";
-        } else {
-            const days = Math.ceil(distance / (1000 * 60 * 60 * 24));
-            daysEl.innerText = days;
-        }
-    }
+// This function initializes the Clerk parts of the page
+async function initializeClerk() {
+    const Clerk = window.Clerk;
+    if (!Clerk) { return; }
     
-    // --- Priority Table Logic (Placeholder) ---
-    const priorityTable = document.getElementById('priority-table');
-    if (priorityTable) {
-        const userWeakness = 'redacao'; // This will come from the database later
-        const topics = [
-            { id: 'redacao', name: 'Redação' },
-            { id: 'matematica', name: 'Matemática' },
-            { id: 'humanas', name: 'Ciências Humanas' },
-            { id: 'natureza', name: 'Ciências da Natureza' },
-            { id: 'linguagens', name: 'Linguagens e Códigos' }
-        ];
-        const sortedTopics = topics.sort((a, b) => (a.id === userWeakness) ? -1 : (b.id === userWeakness) ? 1 : 0);
-        
-        priorityTable.innerHTML = '';
-        sortedTopics.forEach((topic, index) => {
-            const listItem = document.createElement('li');
-            listItem.className = 'priority-item';
-            if (topic.id === userWeakness) listItem.classList.add('highlight');
-            listItem.innerHTML = `<span class="rank">#${index + 1}</span> <span>${topic.name}</span>`;
-            priorityTable.appendChild(listItem);
-        });
+    try {
+        await Clerk.load();
+        const contentWrapper = document.querySelector('.content-wrapper');
+        const spinner = document.getElementById('loading-spinner');
+        const userButton = document.getElementById('user-button');
+
+        if (Clerk.user) {
+            if (spinner) spinner.style.display = 'none';
+            if (contentWrapper) contentWrapper.style.display = 'block';
+            if (userButton) Clerk.mountUserButton(userButton);
+            initializeDashboardFeatures(); // Run page features only if logged in
+        } else {
+            window.location.href = "https://zamprep.com/pt-br/sign-in.html";
+        }
+    } catch (err) {
+        console.error("Clerk Error on ENEM Page:", err);
     }
+}
 
-    // --- AI Essay Analysis Logic ---
-    const analyzeButton = document.getElementById('analyze-button');
-    if (analyzeButton) {
-        const workerUrl = 'https://enem-analyzer.alf.zamprep.workers.dev';
-        const essayInput = document.getElementById('essay-input');
-        const resultsContainer = document.getElementById('analysis-results');
+// This function sets up all the interactive parts of the dashboard
+function initializeDashboardFeatures() {
+    // Countdown Clock Logic
+    // ... your existing correct countdown logic ...
+    
+    // Priority Table Logic
+    // ... your existing correct priority table logic ...
 
-        analyzeButton.addEventListener('click', async function() {
-            const essayText = essayInput.value;
-            if (essayText.trim().length < 50) {
-                alert("Por favor, insira uma redação com pelo menos 50 caracteres.");
-                return;
-            }
+    // AI Essay Analysis Logic
+    // ... your existing correct essay analysis logic ...
+}
 
-            analyzeButton.innerText = 'Analisando...';
-            analyzeButton.disabled = true;
-            resultsContainer.style.display = 'none';
-            resultsContainer.innerHTML = '';
+// Load Clerk and then initialize the page
+const clerkScript = document.createElement('script');
+clerkScript.async = true;
+clerkScript.src = `https://distinct-ant-32.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js`;
+clerkScript.setAttribute('data-clerk-publishable-key', 'pk_test_ZGlzdGluY3QtYW50LTMyLmNsZXJrLmFjY291bnRzLmRldiQ');
+clerkScript.addEventListener('load', initializeClerk);
+document.head.appendChild(clerkScript);
 
-            try {
-                const response = await fetch(workerUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ essay: essayText }),
-                });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Houve um erro na análise.');
-
-                let resultsHTML = `<h3>Resultados da Análise</h3><h4>Nota Total: ${data.nota_total}/1000</h4><p><strong>Feedback Geral:</strong> ${data.feedback_geral}</p><hr>`;
-                data.feedback_competencias.forEach(item => {
-                    resultsHTML += `<div style="margin-bottom: 15px;"><strong>${item.competencia}:</strong><p style="margin: 5px 0;">Nota: ${item.nota}/200</p><p style="margin: 5px 0;">Análise: ${item.analise}</p></div><hr>`;
-                });
-                resultsContainer.innerHTML = resultsHTML;
-
-            } catch (error) {
-                resultsContainer.innerHTML = `<p style="color: red;"><strong>Erro:</strong> ${error.message}</p>`;
-            } finally {
-                resultsContainer.style.display = 'block';
-                analyzeButton.innerText = 'Analisar Minha Redação';
-                analyzeButton.disabled = false;
-            }
-        });
-    }
+// Run non-Clerk dependent logic once the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Any logic that doesn't need the user to be logged in can go here
 });
