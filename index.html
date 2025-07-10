@@ -4,80 +4,226 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seu Painel de Estudos ENEM - Zam Prep</title>
-    <link rel="stylesheet" href="/style.css"> 
+    <meta name="description" content="Acesse seu painel personalizado para o ENEM na Zam Prep: contador regressivo, análise de redação com IA, questões práticas e mais.">
+    <meta name="keywords" content="ENEM, Zam Prep ENEM, preparação ENEM, IA ENEM, redação ENEM, simulados ENEM, contagem regressiva ENEM">
+    <meta name="author" content="Zam Prep Team">
+    <meta property="og:title" content="Painel ENEM - Zam Prep">
+    <meta property="og:description" content="Acesse seu painel personalizado para o ENEM na Zam Prep: contador regressivo, análise de redação com IA, questões práticas e mais.">
+    <meta property="og:image" content="https://enem.zamprep.com/social-share-enem.jpg"> <meta property="og:url" content="https://enem.zamprep.com/pt-br/"> <meta property="og:type" content="website">
+    <link rel="canonical" href="https://enem.zamprep.com/pt-br/"> <link rel="stylesheet" href="/style.css"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    <style>
+        /* Styles for dashboard elements, consistent with style.css but specific to ENEM if needed */
+        /* If these are unique to the dashboard, keep them here or move to a separate dashboard.css */
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: var(--light-gray-color); }
+        .dashboard-header h1 { margin: 0; font-size: 1.5rem; }
+        .dashboard-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr; gap: 40px; }
+        .feature-box { background: var(--white-color); padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; }
+        .feature-box h2 { color: var(--primary-color); font-size: 2rem; margin-bottom: 20px; }
+        .countdown-box #countdown-clock-V2 { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 20px; }
+        .countdown-box #days { font-size: 4rem; font-weight: 700; color: var(--dark-color); }
+        .countdown-box .days-label { font-size: 1.2rem; color: var(--text-muted-color); margin-top: 5px; }
+        .countdown-box .exam-dates { font-size: 1rem; color: var(--text-muted-color); margin-top: 15px; }
+        #essay-input { width: 100%; min-height: 300px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: var(--default-font); font-size: 1rem; margin-top: 20px; box-sizing: border-box; }
+        #analyze-button { margin-top: 20px; }
+        #analysis-results { text-align: left; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+        #analysis-results h3 { color: var(--primary-color); }
 
-    <script async defer
-        src="https://moral-boa-38.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
-        data-clerk-publishable-key="pk_test_bW9yYWwtYm9hLTM4LmNsZXJrLmFjY291bnRzLmRldiQ"
-        onload="startClerk()"
-    ></script>
+        /* Styles for the loading spinner */
+        .loading-spinner { text-align: center; padding: 50px; font-size: 1.2em; color: #555; }
 
-</head>
+        /* Responsive adjustments for ENEM page */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 30px;
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            .feature-box { padding: 25px; }
+            .feature-box h2 { font-size: 1.8rem; }
+            .countdown-box #days { font-size: 3.5rem; }
+            #essay-input { min-height: 250px; }
+        }
+        @media (max-width: 480px) {
+            .feature-box h2 { font-size: 1.5rem; }
+            .countdown-box #days { font-size: 3rem; }
+        }
+    </style>
+
+    </head>
 <body>
+
+    <div id="loading-spinner" class="loading-spinner">
+        Carregando painel ENEM...
+    </div>
 
     <div class="content-wrapper" style="display: none;">
         <header>
             <nav>
-                <a href="/"><img src="/logo.png" alt="Zam Prep Logo" class="logo"></a>
+                <a href="https://zamprep.com/pt-br/"><img src="/logo.png" alt="Zam Prep Logo" class="logo"></a>
                 <div id="user-button"></div>
             </nav>
         </header>
 
         <main>
-    <div class="dashboard-container">
-        <section class="feature-box countdown-box">
-            <h2>Sua jornada para o sucesso no ENEM começa agora!</h2>
-            <div id="countdown-clock-V2">
-                <div class="days-container">
-                    <span id="days">0</span>
-                    <span class="days-label">Dias Restantes</span>
-                </div>
-                <p class="exam-dates">Datas do Exame: 2 e 9 de Novembro, 2025</p>
-            </div>
-        </section>
+            <div class="dashboard-container">
+                <section class="feature-box countdown-box">
+                    <h2>Sua jornada para o sucesso no ENEM começa agora!</h2>
+                    <div id="countdown-clock-V2">
+                        <div class="days-container">
+                            <span id="days">0</span>
+                            <span class="days-label">Dias Restantes</span>
+                        </div>
+                        <p class="exam-dates">Datas do Exame: 2 e 9 de Novembro, 2025</p>
+                    </div>
+                </section>
 
-        <section class="feature-box">
-            <h2>Receba um Feedback Poderoso para sua Redação</h2>
-            <p>Nossa IA analisa sua redação com base nas 5 competências oficiais do ENEM e te mostra exatamente onde melhorar para alcançar a nota 1000.</p>
-            <textarea id="essay-input" rows="15" placeholder="Cole sua redação aqui..."></textarea>
-            <button id="analyze-button" class="cta-button-main">Analisar Minha Redação</button>
-            
-            <div id="analysis-results" style="display: none;">
-                <h3>Resultados da Análise</h3>
-                <div id="results-content"></div>
+                <section class="feature-box">
+                    <h2>Receba um Feedback Poderoso para sua Redação</h2>
+                    <p>Nossa IA analisa sua redação com base nas 5 competências oficiais do ENEM e te mostra exatamente onde melhorar para alcançar a nota 1000.</p>
+                    <textarea id="essay-input" rows="15" placeholder="Cole sua redação aqui..."></textarea>
+                    <button id="analyze-button" class="cta-button-main">Analisar Minha Redação</button>
+                    
+                    <div id="analysis-results" style="display: none;">
+                        <h3>Resultados da Análise</h3>
+                        <div id="results-content"></div>
+                    </div>
+                </section>
             </div>
-        </section>
-    </div>
-</main>
+        </main>
         
         <footer>
             <p>&copy; 2025 Zam Prep. Todos os direitos reservados.</p>
         </footer>
     </div>
 
-  <script>
-        function startClerk() {
+    <script src="/script.js"></script>
+
+    <script>
+        // This script block handles dashboard-specific functionalities
+        // It uses the Clerk instance loaded by the global /script.js
+
+        // Function to initialize Clerk for this specific dashboard page
+        async function initDashboardClerk() {
             const contentWrapper = document.querySelector('.content-wrapper');
             const userButton = document.getElementById('user-button');
-            const Clerk = window.Clerk;
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const Clerk = window.Clerk; // Access the global Clerk object loaded by script.js
 
-            Clerk.load().then(() => {
+            // Check if Clerk is available before proceeding
+            if (!Clerk) {
+                console.error("Clerk.js não disponível. Certifique-se de que script.js o carrega.");
+                // Fallback: Redirect to main site's sign-in if Clerk is not loaded or fails
+                window.location.href = "https://zamprep.com/pt-br/sign-in.html";
+                return;
+            }
+
+            try {
+                await Clerk.load(); // Load the user's session
+
+                loadingSpinner.style.display = 'none'; // Hide loading spinner
+
                 if (Clerk.user) {
-                    // If the user is logged in, show the page content and mount the user button
-                    contentWrapper.style.display = 'block';
-                    Clerk.mountUserButton(userButton);
+                    contentWrapper.style.display = 'block'; // Show content
+                    Clerk.mountUserButton(userButton); // Mount the user button
                 } else {
-                    // THIS IS THE UPDATED LINE
-                    // If user is not logged in, redirect them to the MAIN site's sign-in page
-                    window.location.href = "https://zamprep.com/pt-br/sign-in.html"; 
+                    // Redirect if user is not logged in to the main site's sign-in page
+                    window.location.href = "https://zamprep.com/pt-br/sign-in.html";
                 }
-            });
+            } catch (err) {
+                console.error("Erro de inicialização do painel ENEM do Clerk:", err);
+                // Redirect on error during Clerk load
+                window.location.href = "https://zamprep.com/pt-br/sign-in.html";
+            }
         }
+
+        // --- ENEM Dashboard Specific JavaScript ---
+
+        // 1. Countdown Clock Logic
+        function updateCountdown() {
+            const examDate1 = new Date('2025-11-02T00:00:00'); // November 2, 2025
+            const examDate2 = new Date('2025-11-09T00:00:00'); // November 9, 2025
+            const now = new Date();
+
+            let targetDate = examDate1;
+            if (now > examDate1 && now < examDate2) { // If between first and second date
+                targetDate = examDate2;
+            } else if (now > examDate2) { // If after second date
+                // Exam is over for 2025, maybe show next year's countdown or a message
+                document.getElementById('days').textContent = '0';
+                document.querySelector('.days-label').textContent = 'EXAME CONCLUÍDO';
+                document.querySelector('.exam-dates').textContent = 'Aguarde as datas de 2026!';
+                return;
+            }
+
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+            document.getElementById('days').textContent = days > 0 ? days : '0';
+            if (days <= 0 && now < examDate1) { // If it's the exam day itself but before the first date
+                 document.querySelector('.days-label').textContent = 'HOJE É O ENEM!';
+            } else if (days <= 0 && now >= examDate1 && now < examDate2) {
+                 document.querySelector('.days-label').textContent = 'PRÓXIMA PROVA EM BREVE!';
+            }
+            
+            // Revert label if it was changed
+            if (days > 0 && document.querySelector('.days-label').textContent === 'HOJE É O ENEM!') {
+                 document.querySelector('.days-label').textContent = 'Dias Restantes';
+            }
+        }
+
+        // 2. Essay Analysis Logic (Placeholder)
+        document.getElementById('analyze-button').addEventListener('click', function() {
+            const essayText = document.getElementById('essay-input').value;
+            const resultsDiv = document.getElementById('analysis-results');
+            const resultsContentDiv = document.getElementById('results-content');
+
+            if (essayText.trim() === '') {
+                alert('Por favor, cole sua redação para analisar.');
+                return;
+            }
+
+            // Simulate AI analysis (replace with actual API call)
+            resultsContentDiv.innerHTML = '<p>Analisando sua redação com IA... por favor, aguarde.</p>';
+            resultsDiv.style.display = 'block';
+
+            setTimeout(() => {
+                // In a real application, you would send essayText to your backend AI service
+                // and display the actual analysis results here.
+                const mockResults = `
+                    <p><strong>Competência 1 (Domínio da norma culta):</strong> Bom. Poucos desvios de gramática e ortografia.</p>
+                    <p><strong>Competência 2 (Compreensão da proposta):</strong> Excelente. Abordou o tema de forma completa e demonstrou repertório sociocultural. </p>
+                    <p><strong>Competência 3 (Organização de ideias):</strong> Coerente e coeso. Argumentos bem encadeados.</p>
+                    <p><strong>Competência 4 (Mecanismos linguísticos):</strong> Bom. Uso adequado de conectivos e elementos coesivos.</p>
+                    <p><strong>Competência 5 (Proposta de intervenção):</strong> Muito boa. Detalhada e com todos os elementos necessários. </p>
+                    <p><strong>Recomendação Geral:</strong> Ótima redação! Continue praticando a diversificação de seu repertório sociocultural.</p>
+                    <p><strong>Nota Estimada:</strong> 920/1000</p>
+                `;
+                resultsContentDiv.innerHTML = mockResults;
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 3000); // Simulate 3 seconds AI processing
+        });
+
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial hide/show states for content and spinner
+            document.querySelector('.content-wrapper').style.display = 'none';
+            document.getElementById('loading-spinner').style.display = 'block';
+            document.getElementById('user-button').style.display = 'none'; // Keep user button hidden until mounted
+
+            // Call the Clerk initialization for this dashboard page
+            initDashboardClerk();
+
+            // Start countdown
+            updateCountdown();
+            setInterval(updateCountdown, 1000 * 60 * 60); // Update every hour (can be 1000 for every second if desired)
+        });
     </script>
-    <script src="/script.js"></script>
 
 </body>
 </html>
