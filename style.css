@@ -1,14 +1,24 @@
 /* --- Global Styles & Variables --- */
 :root {
     --primary-color: #00BFA5;
+    --primary-color-dark: #00a28d; /* Darker shade for consistent hover states */
+    --secondary-color-dark: #4c4c4c; /* Darker shade for secondary button hover */
     --dark-color: #2B2B2B;
     --light-gray-color: #f4f4f4;
     --white-color: #ffffff;
+    --text-muted-color: #555; /* For secondary text like hero paragraph and some footers */
+    --border-color: rgba(0,0,0,0.1); /* For shadows and borders */
     --default-font: 'Poppins', sans-serif;
+    --header-height: 70px; /* Define a consistent header height */
+    --section-padding-desktop: 80px 5%; /* Robust padding for large screens */
+    --section-padding-mobile: 40px 5%; /* Robust padding for smaller screens */
+    --card-shadow: 0 4px 8px var(--border-color); /* Consistent card shadow */
+    --feature-box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Specific shadow for feature-box, or could use card-shadow */
 }
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden; /* Prevents horizontal scroll from accidental overflows */
 }
 
 body {
@@ -17,99 +27,126 @@ body {
     padding: 0;
     color: var(--dark-color);
     line-height: 1.6;
-    background-color: var(--light-gray-color);
+    background-color: var(--light-gray-color); /* Consistent background for all body */
+    overflow-x: hidden; /* Ensures no horizontal scroll */
 }
 
-/* --- Header & Navigation --- */
+/* --- Utility Classes (Optional but Recommended) --- */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.flex-center { display: flex; justify-content: center; align-items: center; }
+.hidden { display: none !important; } /* Use with JS for hiding elements */
+
+
+/* --- Header & Navigation (Common to all pages) --- */
 header {
     background: var(--white-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px var(--border-color);
     padding: 10px 5%;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1000; /* Ensures header stays on top */
+    min-height: var(--header-height); /* Ensures header maintains height */
+    display: flex; /* Use flex to align nav vertically */
+    align-items: center; /* Center nav vertically within header */
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%; /* Ensures nav takes full width of header padding */
+}
+
+.logo-link { /* For the <a> tag wrapping your logo image */
+    display: flex;
+    align-items: center;
 }
 
 .logo {
     height: 50px;
+    display: block; /* Removes extra space below image */
 }
 
-/* --- Main Dashboard --- */
-main {
-    padding: 40px 20px;
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
-.dashboard-container {
-    max-width: 900px;
+.nav-menu ul li {
+    margin-left: 30px;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding: 5px 0; /* Add padding for larger clickable area */
+    display: inline-block; /* Required for padding to work */
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active { /* Styling for active navigation link */
+    color: var(--primary-color);
+}
+
+.cta-button {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+    display: inline-block; /* Ensures padding works consistently */
+}
+
+.cta-button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+/* --- Mobile Navigation Toggle (Common) --- */
+.mobile-nav-toggle {
+    display: none; /* Hidden on desktop by default */
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--dark-color); /* Ensures visibility against header background */
+    padding: 5px 10px; /* Add padding for easier tapping */
+    z-index: 1001; /* Ensure it's above the header content if needed */
+}
+
+/* --- Hero Section & General Content Sections (Common to Main Site) --- */
+.hero-section {
+    background-color: var(--light-gray-color);
+    text-align: center;
+    padding: var(--section-padding-desktop);
+}
+.hero-content {
+    max-width: 800px;
     margin: 0 auto;
 }
-
-.feature-box {
-    background-color: var(--white-color);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    margin-bottom: 30px;
-}
-
-.feature-box h2 {
-    font-size: 1.8rem;
-    margin-top: 0;
-    text-align: center;
-    color: var(--dark-color);
-}
-
-/* --- Countdown Clock Styles --- */
-.countdown-box {
-    background-color: var(--dark-color);
-    color: var(--white-color);
-}
-
-.countdown-box h2 {
-    color: var(--white-color);
-}
-
-#countdown-clock {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.time-block {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 8px;
-    min-width: 80px;
-}
-
-.time-block span {
-    font-size: 2.5rem;
+.hero-content h1 {
+    font-size: 3rem;
     font-weight: 700;
-    display: block;
-    line-height: 1;
-}
-
-/* --- Essay Analysis Styles --- */
-#essay-input {
-    width: 100%;
-    box-sizing: border-box; /* Ensures padding doesn't add to width */
-    padding: 15px;
-    font-family: var(--default-font);
-    font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    margin-top: 15px;
     margin-bottom: 20px;
 }
-
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: var(--text-muted-color);
+}
 .cta-button-main {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -118,92 +155,437 @@ main {
     border-radius: 5px;
     font-size: 1.1rem;
     font-weight: 600;
-    cursor: pointer;
-    border: none;
-    display: inline-block;
     transition: background-color 0.3s ease;
+    display: inline-block; /* Ensures padding works consistently */
+    cursor: pointer; /* Explicitly set cursor for button */
+    border: none; /* Remove default button border */
 }
-
 .cta-button-main:hover {
-    background-color: #00a28d;
+    background-color: var(--primary-color-dark);
 }
 
-#analysis-results {
-    margin-top: 30px;
-    text-align: left;
-    padding: 20px;
-    border: 1px solid #eee;
+.exams, .features {
+    padding: var(--section-padding-desktop);
+    text-align: center;
+}
+.exams {
+    background-color: var(--white-color);
+}
+.features {
+    background-color: var(--light-gray-color);
+}
+.exams h2, .features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.exams-grid, .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.exam-card, .feature-card {
+    background: var(--white-color);
+    padding: 30px;
     border-radius: 8px;
+    box-shadow: var(--card-shadow); /* Using variable for consistent shadow */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+.exam-card h3, .feature-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+.exam-card p, .feature-card p {
+    flex-grow: 1; /* Ensures paragraphs take available space, making card heights equal */
 }
 
-/* --- Footer --- */
+.exam-button {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Important for padding/sizing */
+    width: fit-content; /* Adjusts button width to content */
+    align-self: center; /* Centers the button in a flex column */
+}
+.exam-button:hover {
+    background-color: var(--secondary-color-dark);
+}
+
+/* Improved Coming Soon Card (Common) */
+.exam-card.coming-soon {
+    background-color: var(--light-gray-color);
+    border: 2px dashed var(--primary-color);
+    align-items: center; /* Center content vertically in flex column */
+    justify-content: center; /* Center content horizontally in flex column */
+    text-align: center;
+    opacity: 0.7; /* Visually dims the card */
+    pointer-events: none; /* Disables all mouse events on the card */
+    cursor: default; /* Changes cursor to default (not pointer) */
+    position: relative; /* For the pseudo-element overlay */
+}
+
+/* Overlay for "Coming Soon!" text (note: text needs to be set per language in HTML style block if single style.css) */
+.exam-card.coming-soon::after {
+    content: "Coming Soon!"; /* If using a single CSS file for multiple languages, this text will be static. For dynamic text, define it in inline <style> per language HTML file. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--white-color);
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+    white-space: nowrap; /* Prevents the text from wrapping */
+    pointer-events: none; /* Ensures the overlay doesn't block underlying elements if you re-enable parent clicks */
+}
+
+.exam-card.coming-soon .exam-button {
+    display: none; /* Hide the button if the card is coming soon */
+}
+
+/* --- Footer (Common) --- */
 footer {
-    background-color: #e9e9e9;
-    color: #555;
+    background-color: var(--dark-color); /* Consistent dark background */
+    color: var(--white-color); /* Consistent white text */
     text-align: center;
     padding: 20px;
-    margin-top: 40px;
+    font-size: 0.9em; /* Slightly smaller text for footer */
+    /* Removed margin-top from original ENEM CSS as it might interfere with layout consistency */
 }
 
-/* --- Responsive Design for Mobile --- */
-@media (max-width: 768px) {
-    #countdown-clock {
-        flex-direction: column;
-    }
+/* --- Language Dropdown (Common) --- */
+.language-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+    z-index: 999; /* Ensure dropdown is above other content but below sticky header */
 }
-/* Location: enem-zamprep-site/style.css (add to the bottom) */
-
-/* Location: enem-zamprep-site/style.css */
-
-/* --- New Countdown Clock V2 Styles --- */
-#countdown-clock-V2 {
-    padding: 10px 0;
+.language-button {
+    background-color: var(--light-gray-color);
+    color: var(--dark-color);
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+    font-family: var(--default-font);
+    display: flex; /* For aligning icon if added later */
+    align-items: center;
+    justify-content: center;
+}
+.language-button:hover {
+    background-color: #e0e0e0; /* Lighter hover for light button */
+}
+.dropdown-content {
+    display: none; /* Initially hidden, controlled by JS .show class */
+    position: absolute;
+    background-color: var(--white-color); /* Consistent background */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px var(--border-color); /* Using variable for shadow */
+    z-index: 1; /* Relative to parent .language-dropdown */
+    border-radius: 5px;
+    right: 0; /* Align to the right of the button */
+    padding: 5px 0; /* Add slight internal padding */
+}
+.dropdown-content.show { /* Class toggled by JavaScript */
+    display: block;
+}
+.dropdown-content a {
+    color: var(--dark-color); /* Consistent text color */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+.dropdown-content a:hover {
+    background-color: var(--light-gray-color);
 }
 
-/* This makes the countdown box match your other cards */
+/* --- Main Dashboard Specific Styles (for enem.zamprep.com, onboarding.html, account-dashboard.html) --- */
+main {
+    padding: 40px 20px; /* General padding for main content area */
+}
+
+.dashboard-container {
+    max-width: 900px; /* Adjust max-width as needed for your dashboard */
+    margin: 0 auto; /* Center the container */
+    display: grid; /* Use grid for layout in larger screens */
+    grid-template-columns: 1fr; /* Default to single column for smaller screens */
+    gap: 40px; /* Space between grid items */
+}
+
+.feature-box {
+    background-color: var(--white-color);
+    padding: 30px;
+    border-radius: 12px; /* Slightly more rounded corners for feature boxes */
+    box-shadow: var(--feature-box-shadow); /* Using specific shadow variable */
+    /* Removed margin-bottom as gap in grid handles spacing */
+}
+
+.feature-box h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    text-align: center;
+    color: var(--dark-color); /* Consistent dark color */
+    margin-bottom: 20px; /* Added margin for consistency */
+}
+
+/* --- Countdown Clock V2 Styles (for ENEM Dashboard) --- */
+/* The original .countdown-box with dark background is removed/merged for consistency here */
 .countdown-box {
     text-align: center;
+    /* Styles are now primarily driven by .feature-box, and then specific text colors */
 }
 
 .countdown-box h2 {
-    color: var(--dark-color); /* Match text color */
+    color: var(--dark-color); /* Keep consistent with other feature-box titles */
     font-size: 1.8rem;
     margin-bottom: 15px;
+}
+
+#countdown-clock-V2 { /* Main container for the V2 clock */
+    padding: 10px 0;
+    display: flex; /* Ensure inner elements are flexed */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
 }
 
 .days-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 1;
-    color: var(--primary-color); /* Use the site's main teal color */
+    line-height: 1; /* Tighter line height for number and label */
+    color: var(--primary-color); /* Use the site's main teal color for the number */
+    margin-bottom: 10px; /* Space between days container and exam dates */
 }
 
 #countdown-clock-V2 #days {
-    font-size: 4.5rem; /* Made slightly smaller */
+    font-size: 4.5rem;
     font-weight: 700;
 }
 
 #countdown-clock-V2 .days-label {
-    font-size: 1.1rem; /* Made slightly smaller */
+    font-size: 1.1rem;
     font-weight: 600;
     opacity: 0.8;
+    color: var(--dark-color); /* Make label text dark for contrast on light background */
 }
 
 .exam-dates {
-    margin-top: 25px;
+    margin-top: 25px; /* Adjust spacing */
     font-size: 1rem;
     font-weight: 500;
-    color: #555;
+    color: var(--text-muted-color); /* Use text-muted for this text */
     background-color: var(--light-gray-color); /* Lighter background */
     display: inline-block;
     padding: 8px 15px;
     border-radius: 20px;
 }
 
-/* Make it smaller on mobile devices */
-@media (max-width: 768px) {
-    #countdown-clock-V2 #days {
-        font-size: 3.5rem;
+/* --- Essay Analysis Styles (for ENEM Dashboard) --- */
+#essay-input {
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't add to width */
+    min-height: 300px; /* Default height */
+    padding: 15px;
+    font-family: var(--default-font);
+    font-size: 1rem;
+    border: 2px solid #ddd; /* Consistent border */
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    resize: vertical; /* Allow vertical resizing */
+}
+
+#analysis-results {
+    margin-top: 30px;
+    text-align: left;
+    padding: 20px;
+    border: 1px solid var(--light-gray-color); /* Use variable for border */
+    border-radius: 8px;
+    background-color: #fcfcfc; /* Slightly different background for results box */
+}
+#analysis-results h3 {
+    color: var(--primary-color); /* Consistent primary color for results heading */
+    margin-bottom: 15px;
+}
+#analysis-results p {
+    margin-bottom: 10px;
+}
+
+
+/* --- Language Dropdown (Common) --- */
+/* (This section is already defined above, but included here for completeness of context) */
+
+
+/* --- Responsive Design (Common to all pages, extended for dashboard) --- */
+
+/* Tablet and Smaller Desktops */
+@media (max-width: 1024px) {
+    .exams-grid, .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+        gap: 25px;
     }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    /* Dashboard specific adjustments */
+    .dashboard-container {
+        max-width: 700px; /* Slightly narrower on tablets */
+        gap: 30px;
+    }
+    .feature-box h2 {
+        font-size: 1.7rem;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+    /* Header adjustments for mobile */
+    header {
+        padding: 10px 20px; /* More consistent padding for mobile */
+        min-height: auto; /* Allow header height to adjust dynamically */
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: var(--header-height); /* Position below header, using variable */
+        left: 0;
+        right: 0;
+        background-color: var(--white-color);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        box-shadow: 0 4px 8px var(--border-color);
+        transition: transform 0.3s ease-in-out; /* Smooth transition for menu reveal */
+        transform: translateY(-100%); /* Start off-screen (hidden) */
+        display: flex; /* Ensure it's a flex container for its children when visible */
+    }
+
+    /* JavaScript toggles data-visible="true" which brings the menu into view */
+    .nav-menu[data-visible="true"] {
+        transform: translateY(0); /* Slide in */
+    }
+    
+    .nav-menu ul {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 20px; /* Space before CTA/Language */
+    }
+
+    .nav-menu ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .cta-button {
+        margin: 10px auto; /* Center button in menu */
+        width: fit-content; /* Adjust width to content */
+    }
+    
+    .language-dropdown {
+        margin: 10px auto; /* Center dropdown in menu */
+        width: fit-content;
+    }
+
+    .mobile-nav-toggle {
+        display: block; /* Show hamburger button on mobile */
+    }
+
+    /* Content sections padding for mobile */
+    .hero-section, .features, .exams {
+        padding: var(--section-padding-mobile); /* Use mobile specific padding */
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    } /* Adjust font size for smaller screens */
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .exams-grid, .features-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 20px;
+    }
+
+    .exam-card, .feature-card {
+        padding: 20px; /* Slightly less padding on mobile cards */
+    }
+    .exam-card h3, .feature-card h3 {
+        font-size: 1.3rem;
+    }
+    .exam-button {
+        width: 100%; /* Full width button on mobile cards for better tapping */
+    }
+
+    .exam-card.coming-soon::after {
+        font-size: 1em; /* Smaller text for mobile overlay */
+        padding: 8px 12px;
+    }
+
+    /* Mobile specific dropdown behavior */
+    .dropdown-content {
+        position: static; /* Stack dropdown content below button in mobile menu */
+        width: 100%; /* Take full width */
+        box-shadow: none; /* No shadow needed when static */
+        border-top: 1px solid var(--light-gray-color); /* Add a separator for clarity */
+        border-radius: 0;
+    }
+    .language-button {
+        width: 100%; /* Make button full width in mobile menu */
+    }
+
+    /* Dashboard specific mobile adjustments */
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 30px;
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+    .feature-box { padding: 25px; }
+    .feature-box h2 { font-size: 1.8rem; }
+    .countdown-box #days { font-size: 3.5rem; }
+    #essay-input { min-height: 250px; }
+}
+
+/* Small Mobile Devices (e.g., iPhone SE) */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    .hero-content p {
+        font-size: 0.95rem;
+    }
+    .cta-button-main {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    .exams h2, .features h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    footer {
+        font-size: 0.8em;
+    }
+    /* Dashboard specific small mobile adjustments */
+    .feature-box h2 { font-size: 1.5rem; }
+    .countdown-box #days { font-size: 3rem; }
 }
