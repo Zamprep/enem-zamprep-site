@@ -11,7 +11,6 @@
     <meta property="og:description" content="Personalize sua experiência de estudos no Zam Prep respondendo a algumas perguntas rápidas sobre seus objetivos para o ENEM.">
     <meta property="og:image" content="https://www.zamprep.com/social-share-onboarding.jpg"> <meta property="og:url" content="https://www.zamprep.com/pt-br/onboarding.html"> <meta property="og:type" content="website">
     <link rel="canonical" href="https://www.zamprep.com/pt-br/onboarding.html"> <link rel="stylesheet" href="/style.css">
-    
     <style>
         /* Styles specific to the onboarding form, re-using dashboard-container/feature-box */
         .dashboard-container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
@@ -56,7 +55,7 @@
             .feature-box h2 { font-size: 1.8rem; }
         }
     </style>
-</head>
+    </head>
 <body>
 
     <div id="loading-spinner" class="loading-spinner">
@@ -113,24 +112,20 @@
     <script src="/script.js"></script>
 
     <script>
-        // Function to initialize Clerk for this specific onboarding page
         async function initOnboardingClerk() {
             const contentWrapper = document.querySelector('.content-wrapper');
             const userButton = document.getElementById('user-button');
             const loadingSpinner = document.getElementById('loading-spinner');
             const Clerk = window.Clerk; // Access the global Clerk object loaded by script.js
 
-            // Check if Clerk is available before proceeding
             if (!Clerk) {
-                console.error("Clerk.js não disponível. Certifique-se de que script.js o carrega.");
-                // Fallback: Redirect to main site's sign-in if Clerk is not loaded
+                console.error("Clerk.js não disponível. Redirecionando.");
                 window.location.href = "https://zamprep.com/pt-br/sign-in.html";
                 return;
             }
 
             try {
                 await Clerk.load(); // Load the user's session
-
                 loadingSpinner.style.display = 'none'; // Hide loading spinner
 
                 if (Clerk.user) {
@@ -138,17 +133,14 @@
                     Clerk.mountUserButton(userButton); // Mount the user button
                     
                     // IMPORTANT: Check if onboarding is *required* or *completed* for this user.
-                    // If a user has already onboarded, you might want to redirect them directly to the dashboard.
                     // This typically involves checking user metadata via Clerk or your backend.
                     // Example (pseudo-code):
                     // if (Clerk.user.publicMetadata.onboarding_complete) {
-                    //    window.location.href = "/pt-br/account-dashboard.html"; // Or to ENEM dashboard
+                    //    window.location.href = "https://zamprep.com/pt-br/account-dashboard.html"; // Or to ENEM dashboard
                     // }
 
                 } else {
-                    // This page should ideally only be accessible to logged-in users who haven't onboarded yet.
-                    // If a logged-out user lands here, redirect to sign-in.
-                    window.location.href = "https://zamprep.com/pt-br/sign-in.html";
+                    window.location.href = "https://zamprep.com/pt-br/sign-in.html"; // Redirect if not logged in
                 }
             } catch (err) {
                 console.error("Erro de inicialização do onboarding do Clerk:", err);
@@ -216,7 +208,6 @@
 
         // Initial setup on page load
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial hide/show states for content and spinner
             document.querySelector('.content-wrapper').style.display = 'none';
             document.getElementById('loading-spinner').style.display = 'block';
             document.getElementById('user-button').style.display = 'none'; // Keep user button hidden until mounted
