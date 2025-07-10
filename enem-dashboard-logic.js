@@ -1,30 +1,5 @@
-// This function is called by the Clerk script tag once it has fully loaded in the HTML
-function startClerk() {
-    const Clerk = window.Clerk;
-
-    Clerk.load().then(() => {
-        const userButton = document.getElementById('user-button');
-        // This part checks if a user is logged in and, if so, shows their profile button
-        if (Clerk.user && userButton) {
-            Clerk.mountUserButton(userButton);
-        }
-        
-        // The page protection redirect has been temporarily disabled below.
-    });
-
-    // Run all dashboard functions immediately for testing purposes
-    initializeDashboard();
-}
-
-// This function sets up all the interactive parts of the dashboard
-function initializeDashboard() {
-    
-    // --- Temporarily force the page to be visible for testing ---
-    const contentWrapper = document.querySelector('.content-wrapper');
-    const loadingSpinner = document.getElementById('loading-spinner');
-    if(loadingSpinner) loadingSpinner.style.display = 'none';
-    if(contentWrapper) contentWrapper.style.display = 'block';
-    // ----------------------------------------------------------------
+// This function runs after the page content has loaded
+document.addEventListener('DOMContentLoaded', function() {
 
     // --- Countdown Clock Logic ---
     const examDate = new Date('2025-11-02T13:30:00-03:00'); 
@@ -63,7 +38,6 @@ function initializeDashboard() {
             return 0;
         });
         
-        // Clear the table before adding new items to prevent duplicates
         priorityTable.innerHTML = '';
         
         sortedTopics.forEach((topic, index) => {
@@ -81,7 +55,7 @@ function initializeDashboard() {
 
 
     // --- AI Essay Analysis Logic ---
-    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev/';
+    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev';
     const analyzeButton = document.getElementById('analyze-button');
     const essayInput = document.getElementById('essay-input');
     const resultsContainer = document.getElementById('analysis-results');
@@ -97,7 +71,7 @@ function initializeDashboard() {
             analyzeButton.innerText = 'Analisando...';
             analyzeButton.disabled = true;
             resultsContainer.style.display = 'none';
-            resultsContainer.innerHTML = ''; // Clear previous results
+            resultsContainer.innerHTML = '';
 
             try {
                 const response = await fetch(workerUrl, {
@@ -127,4 +101,19 @@ function initializeDashboard() {
             }
         });
     }
-}
+
+    // --- FAQ Accordion Logic ---
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const questionButton = item.querySelector('.faq-question');
+        questionButton.addEventListener('click', () => {
+            const wasActive = item.classList.contains('active');
+            faqItems.forEach(i => i.classList.remove('active'));
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+
+});

@@ -273,3 +273,56 @@ footer {
     margin-top: 0;
     text-align: center;
 }
+/* --- FAQ Section Styles --- */
+.faq-container {
+    text-align: left;
+    margin-top: 30px;
+}
+
+.faq-item {
+    border-bottom: 1px solid #eee;
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 20px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--default-font);
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.faq-answer p {
+    padding: 0 10px 20px 10px;
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Style for when the FAQ is active/open */
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Adjust if your answers are longer */
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+}
