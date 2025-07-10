@@ -153,9 +153,22 @@ footer {
 }
 /* Location: enem-zamprep-site/style.css (add to the bottom) */
 
+/* Location: enem-zamprep-site/style.css */
+
 /* --- New Countdown Clock V2 Styles --- */
 #countdown-clock-V2 {
-    padding: 20px 0;
+    padding: 10px 0;
+}
+
+/* This makes the countdown box match your other cards */
+.countdown-box {
+    text-align: center;
+}
+
+.countdown-box h2 {
+    color: var(--dark-color); /* Match text color */
+    font-size: 1.8rem;
+    margin-bottom: 15px;
 }
 
 .days-container {
@@ -163,24 +176,26 @@ footer {
     flex-direction: column;
     align-items: center;
     line-height: 1;
+    color: var(--primary-color); /* Use the site's main teal color */
 }
 
 #countdown-clock-V2 #days {
-    font-size: 5rem; /* Large font for the number */
+    font-size: 4.5rem; /* Made slightly smaller */
     font-weight: 700;
 }
 
 #countdown-clock-V2 .days-label {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Made slightly smaller */
     font-weight: 600;
     opacity: 0.8;
 }
 
 .exam-dates {
-    margin-top: 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    background-color: rgba(0, 0, 0, 0.2);
+    margin-top: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+    background-color: var(--light-gray-color); /* Lighter background */
     display: inline-block;
     padding: 8px 15px;
     border-radius: 20px;
@@ -189,12 +204,6 @@ footer {
 /* Make it smaller on mobile devices */
 @media (max-width: 768px) {
     #countdown-clock-V2 #days {
-        font-size: 4rem;
-    }
-    #countdown-clock-V2 .days-label {
-        font-size: 1rem;
-    }
-    .exam-dates {
-        font-size: 1rem;
+        font-size: 3.5rem;
     }
 }
