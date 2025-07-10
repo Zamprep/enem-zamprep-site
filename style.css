@@ -1,0 +1,275 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #00BFA5;
+    --primary-color-dark: #00a28d; /* Darker shade for hover states */
+    --secondary-color-dark: #4c4c4c; /* Darker shade for secondary button hover */
+    --dark-color: #2B2B2B;
+    --light-gray-color: #f4f4f4;
+    --white-color: #ffffff;
+    --text-muted-color: #555; /* For secondary text like hero paragraph */
+    --border-color: rgba(0,0,0,0.1); /* For shadows and borders */
+    --default-font: 'Poppins', sans-serif;
+    --header-height: 70px; /* Define a consistent header height */
+    --section-padding-desktop: 80px 5%;
+    --section-padding-mobile: 40px 20px; /* Using px for more reliable mobile padding */
+    --card-shadow: 0 4px 8px var(--border-color); /* Consistent card shadow */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--default-font);
+    margin: 0;
+    padding: 0;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+/* --- Header & Navigation --- */
+header {
+    background: var(--white-color);
+    box-shadow: 0 2px 4px var(--border-color);
+    padding: 10px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: var(--header-height);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    height: 50px;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu ul li {
+    margin-left: 30px;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-menu ul li a:hover {
+    color: var(--primary-color);
+}
+
+.cta-button {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+/* --- Mobile Navigation Toggle --- */
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* --- Hero & Content Sections --- */
+.hero, .features, .exams {
+    padding: var(--section-padding-desktop);
+    text-align: center;
+}
+.hero { background-color: var(--light-gray-color); }
+.features { background-color: var(--light-gray-color); }
+.exams { background-color: var(--white-color); }
+
+.hero-content, .exams-grid, .features-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.hero-content { max-width: 800px; }
+.hero-content h1 { font-size: 3rem; font-weight: 700; margin-bottom: 20px; }
+.hero-content p { font-size: 1.2rem; margin-bottom: 30px; color: var(--text-muted-color); }
+
+.exams h2, .features h2 { font-size: 2.5rem; margin-bottom: 40px; }
+
+.cta-button-main {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+.cta-button-main:hover { background-color: var(--primary-color-dark); }
+
+
+.exams-grid, .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.exam-card, .feature-card {
+    background: var(--white-color);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+.exam-card h3, .feature-card h3 { color: var(--primary-color); font-size: 1.5rem; margin-top: 0; }
+.exam-card p, .feature-card p { flex-grow: 1; }
+
+.exam-button {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+.exam-button:hover { background-color: var(--secondary-color-dark); }
+
+.exam-card.coming-soon {
+    background-color: var(--light-gray-color);
+    border: 2px dashed var(--primary-color);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0.7;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    text-align: center;
+    padding: 20px;
+}
+
+/* --- Language Dropdown --- */
+.language-dropdown { position: relative; display: inline-block; margin-left: 20px; }
+.language-button {
+    background-color: var(--light-gray-color);
+    color: var(--dark-color);
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+    font-family: var(--default-font);
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px var(--border-color);
+    z-index: 1;
+    border-radius: 5px;
+    right: 0;
+}
+.dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; }
+.dropdown-content a:hover { background-color: #f1f1f1; }
+.show { display: block; }
+
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 70px; /* Position below header */
+        left: 0;
+        right: 0;
+        background-color: var(--white-color);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        box-shadow: 0 4px 8px var(--border-color);
+    }
+    .nav-menu[data-visible="true"] { display: flex; }
+    .nav-menu ul { flex-direction: column; width: 100%; }
+    .nav-menu ul li { margin: 10px 0; text-align: center; }
+    .cta-button { margin: 10px 0; text-align: center; }
+    .language-dropdown { margin: 10px 0; }
+    .mobile-nav-toggle { display: block; }
+
+    .hero, .features, .exams { padding: var(--section-padding-mobile); }
+    .hero-content h1 { font-size: 2.2rem; }
+    .exams-grid, .features-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Styles for Auth Pages and Dashboards --- */
+.auth-header {
+    justify-content: center; /* Center logo in simplified header */
+}
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px 20px;
+}
+.loading-spinner {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2em;
+    color: #555;
+}
+.dashboard-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.feature-box {
+    background-color: var(--white-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+}
+.feature-box h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    text-align: center;
+}
