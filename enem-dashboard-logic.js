@@ -3,29 +3,29 @@ function startClerk() {
     const Clerk = window.Clerk;
 
     Clerk.load().then(() => {
-        const contentWrapper = document.querySelector('.content-wrapper');
         const userButton = document.getElementById('user-button');
-        const loadingSpinner = document.getElementById('loading-spinner');
-
-        // This code protects the page
-        if (Clerk.user) {
-            if(loadingSpinner) loadingSpinner.style.display = 'none';
-            if(contentWrapper) contentWrapper.style.display = 'block';
-            if(userButton) Clerk.mountUserButton(userButton);
-            
-            // Now that we know the user is logged in, run all dashboard functions
-            initializeDashboard();
-
-        } else {
-            // If user is not logged in, redirect them to the MAIN site's sign-in page
-            window.location.href = "https://zamprep.com/pt-br/sign-in.html"; 
+        // This part checks if a user is logged in and, if so, shows their profile button
+        if (Clerk.user && userButton) {
+            Clerk.mountUserButton(userButton);
         }
+        
+        // The page protection redirect has been temporarily disabled below.
     });
+
+    // Run all dashboard functions immediately for testing purposes
+    initializeDashboard();
 }
 
 // This function sets up all the interactive parts of the dashboard
 function initializeDashboard() {
     
+    // --- Temporarily force the page to be visible for testing ---
+    const contentWrapper = document.querySelector('.content-wrapper');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if(loadingSpinner) loadingSpinner.style.display = 'none';
+    if(contentWrapper) contentWrapper.style.display = 'block';
+    // ----------------------------------------------------------------
+
     // --- Countdown Clock Logic ---
     const examDate = new Date('2025-11-02T13:30:00-03:00'); 
     const daysEl = document.getElementById('days');
@@ -62,7 +62,10 @@ function initializeDashboard() {
             if (b.id === userWeakness) return 1;
             return 0;
         });
-
+        
+        // Clear the table before adding new items to prevent duplicates
+        priorityTable.innerHTML = '';
+        
         sortedTopics.forEach((topic, index) => {
             const listItem = document.createElement('li');
             listItem.className = 'priority-item';
@@ -72,12 +75,13 @@ function initializeDashboard() {
             listItem.innerHTML = `<span class="rank">#${index + 1}</span> <span>${topic.name}</span>`;
             priorityTable.appendChild(listItem);
         });
+
         priorityContainer.style.display = 'block';
     }
 
 
     // --- AI Essay Analysis Logic ---
-    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev'; // CORRECT URL
+    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev/';
     const analyzeButton = document.getElementById('analyze-button');
     const essayInput = document.getElementById('essay-input');
     const resultsContainer = document.getElementById('analysis-results');
