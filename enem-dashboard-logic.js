@@ -1,39 +1,31 @@
-// This function waits for the Clerk object to be ready
+// This function is called by the browser after the HTML is ready.
 function startClerkWhenReady() {
     const Clerk = window.Clerk;
 
+    // We will attempt to load Clerk to show the user button if they are logged in,
+    // but we will NOT block the page if they are not.
     if (Clerk && Clerk.load) {
-        // Clerk is available, let's initialize the page
-        initializePage();
-    } else {
-        // If Clerk is not ready yet, wait a moment and try again
-        setTimeout(startClerkWhenReady, 100);
+        Clerk.load().then(() => {
+            if (Clerk.user) {
+                const userButton = document.getElementById('user-button');
+                Clerk.mountUserButton(userButton);
+            }
+        });
     }
+    // Run the main dashboard functions immediately for everyone.
+    initializePageForTesting();
 }
 
-// This function runs all the logic for our page
-function initializePage() {
-    const Clerk = window.Clerk;
+// This function now just shows the content and sets up the features.
+function initializePageForTesting() {
+    // --- DEVELOPMENT BYPASS: Force the page to be visible ---
+    const contentWrapper = document.querySelector('.content-wrapper');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if (loadingSpinner) loadingSpinner.style.display = 'none';
+    if (contentWrapper) contentWrapper.style.display = 'block';
+    // ----------------------------------------------------
 
-    Clerk.load().then(() => {
-        const contentWrapper = document.querySelector('.content-wrapper');
-        const userButton = document.getElementById('user-button');
-        const loadingSpinner = document.getElementById('loading-spinner');
-
-        // This code protects the page
-        if (Clerk.user) {
-            loadingSpinner.style.display = 'none';
-            contentWrapper.style.display = 'block';
-            Clerk.mountUserButton(userButton);
-            
-            // Now that we know the user is logged in, run all dashboard functions
-            initializeDashboardFeatures();
-
-        } else {
-            // If user is not logged in, redirect them to the MAIN site's sign-in page
-            window.location.href = "https://zamprep.com/pt-br/sign-in.html"; 
-        }
-    });
+    initializeDashboardFeatures();
 }
 
 // This function sets up all the interactive parts of the dashboard
@@ -91,9 +83,8 @@ function initializeDashboardFeatures() {
         priorityContainer.style.display = 'block';
     }
 
-
     // --- AI Essay Analysis Logic ---
-    const workerUrl = 'https://enem-analyzer.alf-zamprep.workers.dev/';
+    const workerUrl = 'https://enem-analyzer.alf.zamprep.workers.dev/'; // Corrected URL with dot
     const analyzeButton = document.getElementById('analyze-button');
     const essayInput = document.getElementById('essay-input');
     const resultsContainer = document.getElementById('analysis-results');
